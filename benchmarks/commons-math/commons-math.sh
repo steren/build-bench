@@ -2,7 +2,7 @@
 rm -rf ../../build/commons-math
 rm -f ../../build/reports/commons-math.csv
 rm ./*.csv
-rm -rf ../../caches/bazel/bazel0.1.4rc2/bazel_cache
+rm -rf ../../caches/bazel/bazel0.3.1/bazel_cache
 
 make -C ../.. CONFIG=configs/commons-math.mk
 mv ../../build/reports/commons-math.csv ./sample1.csv

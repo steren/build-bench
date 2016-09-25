@@ -2,7 +2,7 @@
 rm -rf ../../build/multi-16-10
 rm -f ../../build/reports/multi-16-10.csv
 rm ./*.csv
-rm -rf ../../caches/bazel/bazel0.14.rc2/bazel_cache
+rm -rf ../../caches/bazel/bazel0.3.1/bazel_cache
 
 make -C ../.. CONFIG=configs/generated_multi.mk
 mv ../../build/reports/multi-16-10.csv ./sample1.csv
