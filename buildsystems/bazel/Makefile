@@ -19,7 +19,7 @@ include $(ROOT_DIR)/include/time.mk
 
 export BAZEL_DIR=$(CACHE_DIR)/bazel
 
-export BAZEL_OPTIONS:=--test_verbose_timeout_warnings --verbose_failures --legacy_bazel_java_test --javacopt='-extra_checks:off' 
+export BAZEL_OPTIONS:=--test_verbose_timeout_warnings --verbose_failures --legacy_bazel_java_test --javacopt='-extra_checks:off' --genrule_strategy=standalone --spawn_strategy=standalone
 
 .PHONY: bazel
 bazel: bazel$(BAZEL_DEFAULT_VERSION)
