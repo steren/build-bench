@@ -7,7 +7,7 @@ ifndef ROOT_DIR
 $(error ROOT_DIR is not set)
 endif
 
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+export JAVA_HOME=/usr/java/latest/
 
 # delete undesired buildsystems in custom config
 export BUILDSYSTEMS=\
