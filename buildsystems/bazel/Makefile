@@ -39,13 +39,22 @@ bazel%: $(CONFIGURED_BUILD_ROOT)/bazel%/BUILD $(BAZEL_DIR)/bazel%/bin/bazel $(RE
 .PRECIOUS: $(BAZEL_DIR)/bazel-%-installer-linux-x86_64.sh
 $(BAZEL_DIR)/bazel-%-installer-linux-x86_64.sh:
 	@mkdir -p $(BAZEL_DIR)
+	@if [ "$*" == "0.3.2rc2" ]; then \
+    cd $(BAZEL_DIR); wget --quiet https://storage.googleapis.com/bazel/0.3.2/rc2/bazel-0.3.2rc2-installer-linux-x86_64.sh; \
+  elif [ "$*" == "0.3.1w" ]; then \
+    cd $(BAZEL_DIR); wget --quiet https://github.com/bazelbuild/bazel/releases/download/0.3.1/bazel-0.3.1-installer-linux-x86_64.sh -O bazel-0.3.1w-installer-linux-x86_64.sh; \
+  else \
+    cd $(BAZEL_DIR); wget --quiet https://github.com/bazelbuild/bazel/releases/download/$*/bazel-$*-installer-linux-x86_64.sh; \
+  fi
 	@cd $(BAZEL_DIR); wget --quiet https://github.com/bazelbuild/bazel/releases/download/$*/bazel-$*-installer-linux-x86_64.sh
 	@cd $(BAZEL_DIR); chmod u+x bazel-$*-installer-linux-x86_64.sh
 
 .PRECIOUS: $(BAZEL_DIR)/bazel%/bazel.bazelrc
 $(BAZEL_DIR)/bazel%/bazel.bazelrc:
 	mkdir -p $(BAZEL_DIR)/bazel$*
-	echo "build --package_path %workspace%:$(BAZEL_DIR)/bazel$*/lib/bazel/base_workspace\nfetch --package_path %workspace%:$(BAZEL_DIR)/bazel$*/lib/bazel/base_workspace\nquery --package_path %workspace%:$(BAZEL_DIR)/bazel$*/lib/bazel/base_workspace" > $(BAZEL_DIR)/bazel$*/bazel.bazelrc
+	@if [ "$*" == "0.3.1w" ]; then echo "build --strategy=Javac=worker" > $(BAZEL_DIR)/bazel$*/bazel.bazelrc; \
+	else echo "" > $(BAZEL_DIR)/bazel$*/bazel.bazelrc; fi
+
 
 .PRECIOUS: $(BAZEL_DIR)/bazel%/bin/bazel
 $(BAZEL_DIR)/bazel%/bin/bazel: $(BAZEL_DIR)/bazel-%-installer-linux-x86_64.sh $(BAZEL_DIR)/bazel%/bazel.bazelrc
